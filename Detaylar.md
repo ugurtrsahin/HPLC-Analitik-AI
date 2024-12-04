@@ -83,7 +83,7 @@ Bu proje HPLC kolon seçiminde ve metot optimizasyonunda derin öğrenme teknikl
 
 Verilen kod, verileri elde etmek ve analiz etmek için kullanılan kodun tamamını içermektedir.
 
-[Data Dosyası Hakkında](https://www.notion.so/Data-Dosyas-Hakk-nda-111b6792444f802689e4ec65bcfb61e4?pvs=21](https://github.com/ugurtrsahin/HPLC-Analitik-AI/blob/7a6f4befb31d3b4912b8bf554cf94746693f3b15/Data.md)
+[Data Dosyası Hakkında][(https://www.notion.so/Data-Dosyas-Hakk-nda-111b6792444f802689e4ec65bcfb61e4?pvs=21](https://github.com/ugurtrsahin/HPLC-Analitik-AI/blob/7a6f4befb31d3b4912b8bf554cf94746693f3b15/Data.md)](https://github.com/ugurtrsahin/HPLC-Analitik-AI/blob/7a6f4befb31d3b4912b8bf554cf94746693f3b15/Data.md)
 
 Data dosyası, "kolon.csv" olarak adlandırılmıştır ve aşağıda verilen kod ile okunmaktadır. 
 
