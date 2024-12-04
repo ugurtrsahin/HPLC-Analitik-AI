@@ -10,6 +10,8 @@ Yapay zeka araçlarını doğru kullanarak, başta benim için zor görünen bir
 
 Geliştirmek veya üzerine eklemeler yapmak isteyen herkes, projeyi alıp özgürce kullanabilir ve üzerinde çalışabilir. Her türlü geri bildirim ve önerilerinizi de duymaktan memnuniyet duyarım.
 
+Çalışma Sayfası: https://github.com/ugurtrsahin/HPLC-Analitik-AI/blob/05b3c05b2eb214b1820271bc4e071aca98585c96/%C3%87al%C4%B1%C5%9Fma%20Sayfas%C4%B1
+
 İyi çalışmalar dilerim!
 
 UĞUR ŞAHİN
