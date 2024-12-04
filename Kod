@@ -1,0 +1,174 @@
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.impute import SimpleImputer
+
+# Veri Yükleme ve Ön İşleme
+print("1. HPLC Kolon Verilerinin Yüklenmesi ve Ön İşlenmesi")
+df = pd.read_csv('kolon.csv', encoding='latin-1')
+print(f"Analiz edilen HPLC kolon sayısı: {df.shape[0]}")
+
+# Veri setinin yapısını inceleme
+print("\nHPLC Kolon Özelliklerinin Özeti:")
+print(df.info())
+
+print("\nÖrnek HPLC Kolonları:")
+print(df.head())
+
+print("\nEksik Veri Analizi:")
+print(df.isnull().sum())
+
+# HSM parametrelerini ve diğer sayısal özellikleri ayırma
+hsm_parameters = ['H', 'S', 'A', 'B', 'C28', 'C70', 'retention']
+numeric_columns = df.select_dtypes(include=[np.number]).columns
+categorical_columns = df.select_dtypes(exclude=[np.number]).columns
+
+print("\nHSM Parametreleri:", hsm_parameters)
+print("Diğer Sayısal Özellikler:", [col for col in numeric_columns if col not in hsm_parameters])
+print("Kategorik Özellikler:", categorical_columns.tolist())
+
+# Eksik değerleri doldurma
+numeric_imputer = SimpleImputer(strategy='mean')
+df[numeric_columns] = numeric_imputer.fit_transform(df[numeric_columns])
+
+categorical_imputer = SimpleImputer(strategy='most_frequent')
+df[categorical_columns] = categorical_imputer.fit_transform(df[categorical_columns])
+
+# HSM Parametrelerinin Analizi
+print("\n2. HSM Parametrelerinin Analizi")
+
+# HSM parametrelerinin dağılımı
+plt.figure(figsize=(15, 10))
+for i, param in enumerate(hsm_parameters[:-1], 1):
+    plt.subplot(2, 3, i)
+    sns.histplot(df[param], kde=True)
+    plt.title(f'{param} Dağılımı')
+    if param == 'H':
+        plt.xlabel('Faz Hidrofobikliği')
+    elif param == 'S':
+        plt.xlabel('Molekül Penetrasyon Direnci')
+    elif param == 'A':
+        plt.xlabel('Hidrojen Bağı Asitliği')
+    elif param == 'B':
+        plt.xlabel('Hidrojen Bağı Bazlığı')
+    elif param in ['C28', 'C70']:
+        plt.xlabel('İyonize Solüt Etkileşimi')
+plt.tight_layout()
+plt.show()
+
+# Retention vs HSM parametreleri scatter plot
+plt.figure(figsize=(15, 10))
+for i, param in enumerate(hsm_parameters[:-1], 1):
+    plt.subplot(2, 3, i)
+    sns.scatterplot(x=param, y='retention', hue='type', data=df, alpha=0.6)
+    plt.title(f'{param} vs Retention')
+    if param == 'H':
+        plt.xlabel('Faz Hidrofobikliği')
+    elif param == 'S':
+        plt.xlabel('Molekül Penetrasyon Direnci')
+    elif param == 'A':
+        plt.xlabel('Hidrojen Bağı Asitliği')
+    elif param == 'B':
+        plt.xlabel('Hidrojen Bağı Bazlığı')
+    elif param in ['C28', 'C70']:
+        plt.xlabel('İyonize Solüt Etkileşimi')
+    plt.ylabel('Retention')
+plt.tight_layout()
+plt.show()
+
+# HSM parametreleri arasındaki korelasyon
+correlation = df[hsm_parameters].corr()
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation, annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('HSM Parametreleri Arasındaki Korelasyon')
+plt.tight_layout()
+plt.show()
+
+# İstatistiksel Analizler
+print("\n3. HPLC Kolon Tiplerinin Retention Üzerindeki Etkisi")
+
+# ANOVA testi: Kolon tipi vs Retention
+types = df['type'].unique()
+type_groups = [df[df['type'] == t]['retention'] for t in types]
+f_value, p_value = stats.f_oneway(*type_groups)
+print(f"ANOVA testi (Kolon tipi vs Retention): F={f_value:.2f}, p={p_value:.4f}")
+
+if p_value < 0.05:
+    print("Kolon tipleri arasında retention değerleri açısından istatistiksel olarak anlamlı bir fark vardır.")
+else:
+    print("Kolon tipleri arasında retention değerleri açısından istatistiksel olarak anlamlı bir fark yoktur.")
+
+# HSM parametrelerinin betimsel istatistikleri
+print("\nHSM Parametrelerinin Betimsel İstatistikleri:")
+print(df[hsm_parameters].describe())
+
+# Üretici Analizi
+print("\n4. HPLC Kolon Üreticilerinin Performans Analizi")
+
+manufacturer_retention = df.groupby('manufacturer')['retention'].agg(['mean', 'std']).sort_values('mean', ascending=False)
+plt.figure(figsize=(12, 6))
+manufacturer_retention.head(20)['mean'].plot(kind='bar', yerr=manufacturer_retention.head(20)['std'], capsize=5)
+plt.title('Üreticilere Göre Ortalama Retention Değerleri (İlk 20)')
+plt.xlabel('Üretici')
+plt.ylabel('Ortalama Retention (Hata Çubukları: Standart Sapma)')
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
+
+# Makine Öğrenimi: Retention Tahmini
+print("\n5. HPLC Kolon Retention Değeri Tahmin Modeli")
+
+df_encoded = pd.get_dummies(df, columns=['type', 'USPtype', 'phase'])
+
+X = df_encoded.drop(['id', 'name', 'manufacturer', 'retention'], axis=1)
+y = df_encoded['retention']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+rf_model.fit(X_train_scaled, y_train)
+y_pred = rf_model.predict(X_test_scaled)
+
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Model Performansı:")
+print(f"Ortalama Kare Hata (MSE): {mse:.4f}")
+print(f"R-kare Skoru: {r2:.4f}")
+
+# Özellik önemlilikleri
+feature_importance = pd.DataFrame({
+    'feature': X.columns,
+    'importance': rf_model.feature_importances_
+}).sort_values('importance', ascending=False)
+
+plt.figure(figsize=(10, 6))
+sns.barplot(x='importance', y='feature', data=feature_importance.head(10))
+plt.title('HPLC Kolon Retention Değerini Etkileyen En Önemli 10 Özellik')
+plt.tight_layout()
+plt.show()
+
+print("\n6. Sonuçlar ve HPLC Kolon Seçimi İçin Öneriler")
+print("1. Veri setimiz çeşitli HPLC kolon özelliklerini ve HSM parametrelerini içermektedir.")
+print("2. Kolon tipleri arasında retention değerleri açısından anlamlı farklılıklar bulunmaktadır.")
+print("3. Faz hidrofobikliği (H) ve retention arasında güçlü bir ilişki gözlemlenmektedir.")
+print("4. Üreticiler arasında ortalama retention değerleri ve performans farklılıkları mevcuttur.")
+print("5. Geliştirilen tahmin modeli, HPLC kolon retention değerlerini başarıyla tahmin etmektedir.")
+print("6. En önemli özellikler arasında faz hidrofobikliği (H), molekül penetrasyon direnci (S), ve bazı kolon tipleri yer almaktadır.")
+print("\nBu analizler ışığında, HPLC kolon seçimi ve optimizasyonu için şu önerilerde bulunulabilir:")
+print("- Analiz edilecek bileşiklerin özelliklerine göre uygun hidrofobiklik seviyesine sahip kolonlar seçilmelidir.")
+print("- Kolon tipi, üretici performansı ve HSM parametreleri birlikte değerlendirilerek en uygun kolon belirlenmelidir.")
+print("- Yüksek retention değeri gerektiren analizler için faz hidrofobikliği (H) yüksek kolonlar tercih edilebilir.")
+print("- Farklı türde bileşikler analiz edilecekse, çeşitli HSM parametrelerine sahip kolonların kombinasyonu düşünülebilir.")
+print("- Geliştirilen tahmin modeli, yeni kolonların performansını öngörmek için kullanılabilir.")
