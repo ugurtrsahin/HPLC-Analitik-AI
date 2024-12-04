@@ -47,7 +47,7 @@ Projeye katkıda bulunmak isteyenler, pull request gönderebilir veya issue aça
 
 **İletişim**
 
-Uğur Şahin - [ugursahin@example.com](mailto:ugursahin@example.com) (E-posta adresinizi ekleyin)
+Uğur Şahin - [ugurtrsahin@gmail.com](mailto:ugurtrsahin@gmail.com)
 
 **Çalışma Sayfası**
 
