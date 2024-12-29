@@ -86,7 +86,7 @@ Project Link: [https://github.com/ugurtrsahin/HPLC-Analitik-AI](https://github.c
 
 ## 📝 Lisans
 
-Bu proje MIT lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
+Bu proje Apache lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
 
 
