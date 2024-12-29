@@ -81,7 +81,7 @@ Projemizin ana bulguları:
 
 ## ✉️ İletişim
 
-Uğur Şahin - [ugurtrsahin@gmail.com](mailto:ugurtrsahin@gmail.com)
+Uğur Şahin - [ugur.tr.sahin@gmail.com](mailto:ugurtrsahin@gmail.com)
 
 Project Link: [https://github.com/ugurtrsahin/HPLC-Analitik-AI](https://github.com/ugurtrsahin/HPLC-Analitik-AI)
 
