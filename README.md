@@ -1,6 +1,6 @@
 # HPLC Column Selection Using Machine Learning
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[[![License: Apache](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)](https://opensource.org/license/apache-2-0)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
 
 Bu proje, Yüksek Performanslı Sıvı Kromatografisi (HPLC) kolon seçim sürecini optimize etmek için makine öğrenimi tekniklerini kullanmaktadır. 780 farklı HPLC kolonunun özelliklerini analiz ederek, en uygun kolon seçimini otomatize etmeyi amaçlamaktadır.
