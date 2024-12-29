@@ -22,7 +22,7 @@ Bu proje, Yüksek Performanslı Sıvı Kromatografisi (HPLC) kolon seçim sürec
 
 ```bash
 # Repository'yi klonlayın
-git clone https://github.com/yourusername/HPLC-Column-Selection.git
+git clone https://github.com/yourusername/HPLC-Analitik-AI.git
 cd HPLC-Column-Selection
 
 # Sanal ortam oluşturun ve aktive edin
@@ -83,7 +83,7 @@ Projemizin ana bulguları:
 
 Uğur Şahin - [ugurtrsahin@gmail.com](mailto:ugurtrsahin@gmail.com)
 
-Project Link: [https://github.com/yourusername/HPLC-Column-Selection](https://github.com/yourusername/HPLC-Column-Selection)
+Project Link: [https://github.com/yourusername/HPLC-Column-Selection](https://github.com/yourusername/HPLC-Analitik-AI)
 
 [Notion Sayfası](https://ugurtrsahin.notion.site/HPLC-Kolon-Se-iminde-Derin-renme-Yakla-m-H-zland-r-lm-Metod-Geli-tirme-ve-Validasyon-111b6792444f807facc9c4b82de81d94?pvs=4)
 
