@@ -83,7 +83,7 @@ Projemizin ana bulguları:
 
 Uğur Şahin - [ugurtrsahin@gmail.com](mailto:ugurtrsahin@gmail.com)
 
-Project Link: [https://github.com/yourusername/HPLC-Column-Selection](https://github.com/yourusername/HPLC-Analitik-AI)
+Project Link: [https://github.com/yourusername/HPLC-Column-Selection](https://github.com/ugurtrsahin/HPLC-Analitik-AI)
 
 [Notion Sayfası](https://ugurtrsahin.notion.site/HPLC-Kolon-Se-iminde-Derin-renme-Yakla-m-H-zland-r-lm-Metod-Geli-tirme-ve-Validasyon-111b6792444f807facc9c4b82de81d94?pvs=4)
 
