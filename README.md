@@ -1,54 +1,95 @@
-# HPLC-Analitik-AI
+# HPLC Column Selection Using Machine Learning
 
-Yüksek Performanslı Sıvı Kromatografisi (HPLC) kolon seçimi ve metod optimizasyonunu hızlandırmak için derin öğrenme tabanlı bir açık kaynak projesi. Alıkonma zamanı tahmini, kolon önerisi ve metod optimizasyonu gibi özellikler içerir. İlaç keşfi ve geliştirme süreçlerini hızlandırmayı hedefler.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
 
-**Hakkında**
+Bu proje, Yüksek Performanslı Sıvı Kromatografisi (HPLC) kolon seçim sürecini optimize etmek için makine öğrenimi tekniklerini kullanmaktadır. 780 farklı HPLC kolonunun özelliklerini analiz ederek, en uygun kolon seçimini otomatize etmeyi amaçlamaktadır.
 
-Bu proje, yapay zeka ve makine öğrenimi araçlarını kullanarak HPLC analizlerini kolaylaştırmak için geliştirilmiştir. Bir yazılım geliştiricisi veya yapay zeka uzmanı olmasam da, bu araçların gücünden yararlanarak karmaşık analizleri otomatikleştirmenin mümkün olduğunu gördüm.
+## 🚀 Özellikler
 
-**Proje Detayları**
+- HPLC kolon özelliklerinin kapsamlı analizi
+- Hidrofobik Çıkarma Modeli (HSM) parametrelerinin değerlendirilmesi
+- Random Forest regresyon modeli ile retention zamanı tahmini
+- Detaylı görselleştirmeler ve istatistiksel analizler
+- Kolon seçimi için otomatik öneriler
 
-Bu çalışma, Python ve çeşitli veri bilimi kütüphaneleri kullanılarak gerçekleştirilmiştir. HPLC kolonlarının özelliklerinin alıkonma süreleri üzerindeki etkilerini analiz eden bir model geliştirilmiştir. Proje aşağıdaki özellikleri içermektedir:
+## 📊 Performans
 
-* **Eksik Veri Analizi:** Veri setindeki eksik değerler analiz edilmiş ve ortalama/en sık görülen değer ile doldurulmuştur.
-* **Görselleştirme Teknikleri:** Verileri ve analiz sonuçlarını anlamak için `matplotlib` ve `seaborn` kütüphaneleri kullanılmıştır.  HSM parametrelerinin dağılımları, retention süreleri ile ilişkileri ve özellik önemlilikleri görselleştirilmiştir.
-* **İstatistiksel Analizler (ANOVA):** Farklı kolon tiplerinin alıkonma süreleri üzerindeki etkisi ANOVA testi ile analiz edilmiştir.
-* **Random Forest Regressor Modeli:** Alıkonma süresini tahmin etmek için bir Random Forest Regressor modeli eğitilmiştir. Model, hiperparametre ayarlaması yapılmadan `n_estimators=100` ve `random_state=42` ile kullanılmıştır.
-* **Özellik Önemliliği Analizi:** Kolon parametrelerinin alıkonma süresi üzerindeki etkileri, Random Forest modelinin özellik önemliliği değerleri kullanılarak incelenmiştir.
+- Model R-kare skoru: 0.7057
+- Ortalama Kare Hata (MSE): 4.2791
 
-**Kullanılan Teknolojiler**
+## 🛠️ Kurulum
 
-* Python
-* Pandas
-* NumPy
-* Scikit-learn
-* Matplotlib
-* Seaborn
-* Scipy
+```bash
+# Repository'yi klonlayın
+git clone https://github.com/yourusername/HPLC-Column-Selection.git
+cd HPLC-Column-Selection
 
-**Kurulum**
+# Sanal ortam oluşturun ve aktive edin
+python -m venv venv
+source venv/bin/activate  # Linux/Mac için
+venv\Scripts\activate  # Windows için
 
-1. Projeyi klonlayın: `git clone https://github.com/ugurtrsahin/HPLC-Analitik-AI.git`
-2. Gerekli kütüphaneleri yükleyin: `pip install -r requirements.txt` (requirements.txt dosyasını oluşturmanız ve gerekli kütüphaneleri eklemeniz gerekmektedir.)
-3. `kolon.csv` dosyasını projenin ana dizinine yerleştirin.
+# Gerekli paketleri yükleyin
+pip install -r requirements.txt
+```
 
-**Kullanım**
+## 💻 Kullanım
 
-1. `kolon.csv` dosyasını uygun şekilde düzenleyin ve kaydedin.
-2. Python scriptini çalıştırın: `python hplc_analiz.py` (Scriptinizin adını uygun şekilde değiştirin.)
+```python
+from src.model import HPLCColumnPredictor
 
-**Katkıda Bulunma**
+# Model nesnesini oluşturun
+predictor = HPLCColumnPredictor()
 
-Projeye katkıda bulunmak isteyenler, pull request gönderebilir veya issue açabilirler.
+# Veriyi yükleyin ve modeli eğitin
+predictor.train('data/raw/kolon.csv')
 
-**Lisans**
+# Yeni bir kolon için tahmin yapın
+prediction = predictor.predict({
+    'H': 1.08,
+    'S': 0.05,
+    'A': 0.47,
+    'B': 0.06,
+    'C28': 1.48,
+    'C70': 1.56
+})
+```
 
-[MIT Lisansı](https://choosealicense.com/licenses/mit/)
+## 📁 Veri Seti
 
-**İletişim**
+Veri seti 780 HPLC kolonunun özelliklerini içermektedir:
+- HSM parametreleri (H, S, A, B, C28, C70)
+- Retention değerleri
+- Kolon tipleri ve fazları
+- Üretici bilgileri
+
+## 📈 Sonuçlar
+
+Projemizin ana bulguları:
+1. Hidrofobiklik (H) parametresi retention zamanı üzerinde en etkili faktördür
+2. Kolon tipleri arasında anlamlı performans farkları bulunmaktadır
+3. Model, kolon seçimini optimize ederek zaman ve maliyet tasarrufu sağlamaktadır
+
+## 🤝 Katkıda Bulunma
+
+1. Fork edin
+2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
+3. Değişikliklerinizi commit edin (`git commit -m 'Add some AmazingFeature'`)
+4. Branch'inizi push edin (`git push origin feature/AmazingFeature`)
+5. Pull Request oluşturun
+
+## ✉️ İletişim
 
 Uğur Şahin - [ugurtrsahin@gmail.com](mailto:ugurtrsahin@gmail.com)
 
-**Çalışma Sayfası**
+Project Link: [https://github.com/yourusername/HPLC-Column-Selection](https://github.com/yourusername/HPLC-Column-Selection)
 
 [Notion Sayfası](https://ugurtrsahin.notion.site/HPLC-Kolon-Se-iminde-Derin-renme-Yakla-m-H-zland-r-lm-Metod-Geli-tirme-ve-Validasyon-111b6792444f807facc9c4b82de81d94?pvs=4)
+
+## 📝 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
+
+
+
